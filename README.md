@@ -1,5 +1,8 @@
 ## go.rice
 
+[![Wercker](https://img.shields.io/wercker/ci/54c7af4dcc09f9963725bb25.svg?style=flat-square)](https://app.wercker.com/#applications/54c7af4dcc09f9963725bb25)
+[![Godoc](https://img.shields.io/badge/godoc-go.rice-blue.svg?style=flat-square)](https://godoc.org/github.com/GeertJohan/go.rice)
+
 go.rice is a [Go](http://golang.org) package that makes working with resources such as html,js,css,images and templates very easy. During development `go.rice` will load required files directly from disk. Upon deployment it is easy to add all resource files to a executable using the `rice` tool, without changing the source code for your package. go.rice provides several methods to add resources to a binary.
 
 ### What does it do?
@@ -100,8 +103,6 @@ go build
 #### append
 **Append resources to executable as zip file**
 
-_Does not work on windows (yet)_
-
 This method changes an allready built executable. It appends the resources as zip file to the binary. It makes compilation a lot faster and can be used with large resource files.
 
 Downsides for appending are that it requires `zip` to be installed and does not provide a working Seek method.
@@ -111,6 +112,10 @@ Run the following commands to create a standalone executable.
 go build -o example
 rice append --exec example
 ```
+
+**Note: requires zip command to be installed**
+
+On windows, install zip from http://gnuwin32.sourceforge.net/packages/zip.htm or cygwin/msys toolsets.
 
 #### Help information
 Run `rice -h` for information about all options.
@@ -131,7 +136,6 @@ This project is licensed under a Simplified BSD license. Please read the [LICENS
 ### TODO & Development
 This package is not completed yet. Though it already provides working embedding, some important featuers are still missing.
  - implement Readdir() correctly on virtualDir
- - automated testing with TravisCI or Drone **important**
  - in-code TODO's
  - find boxes in imported packages
 

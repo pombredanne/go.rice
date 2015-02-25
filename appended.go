@@ -8,7 +8,7 @@ import (
 	"strings"
 	"time"
 
-	"bitbucket.org/kardianos/osext"
+	"github.com/kardianos/osext"
 	"github.com/daaku/go.zipexe"
 )
 
@@ -33,16 +33,17 @@ func init() {
 	// find if exec is appended
 	thisFile, err := osext.Executable()
 	if err != nil {
-		return // not apended or cant find self executable
+		return // not appended or cant find self executable
 	}
-	rd, err := zipexe.Open(thisFile)
+	closer, rd, err := zipexe.OpenCloser(thisFile)
 	if err != nil {
-		return // not apended
+		return // not appended
 	}
+	defer closer.Close()
 
 	for _, f := range rd.File {
 		// get box and file name from f.Name
-		fileParts := strings.SplitN(strings.TrimLeft(f.Name, "/"), "/", 2)
+		fileParts := strings.SplitN(strings.TrimLeft(filepath.ToSlash(f.Name), "/"), "/", 2)
 		boxName := fileParts[0]
 		var fileName string
 		if len(fileParts) > 1 {
